@@ -8,15 +8,15 @@ import java.util.stream.Stream;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 
-public class StreamIteratorScenarios {
+final class StreamIteratorScenarios {
 
     /**
      * Use IntStream.rangeClosed(0, 5) instead
      */
     @Test
-    public void shouldIterateWithStopCondition() {
+    void shouldIterateWithStopCondition() {
         // When
-        final List<Integer> numbers = //
+        List<Integer> numbers = //
             Stream //
                 .iterate(0, i -> i < 5, i -> i + 1) //
                 .collect(toList());
@@ -29,9 +29,9 @@ public class StreamIteratorScenarios {
      * Do not use to iterate through iterable like data as it lose last element.
      */
     @Test
-    public void shouldLoseLastElementWhenIterateThroughIteratorLikeData() {
+    void shouldLoseLastElementWhenIterateThroughIteratorLikeData() {
         // Given
-        final StringTokenizer tokens = new StringTokenizer("A B C D");
+        StringTokenizer tokens = new StringTokenizer("A B C D");
         List<Object> letters = Lists.newArrayList();
 
         // When
