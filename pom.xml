@@ -16,6 +16,7 @@
         <assertj.version>3.5.2</assertj.version>
         <maven.surefire.plugin.version>2.19.1</maven.surefire.plugin.version>
         <maven.compiler.plugin.version>3.5.1</maven.compiler.plugin.version>
+        <google.collections.version>1.0</google.collections.version>
     </properties>
 
 
@@ -31,6 +32,11 @@
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>${google.collections.version}</version>
         </dependency>
     </dependencies>
 
