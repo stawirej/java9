@@ -58,4 +58,20 @@ final class OptionalStreamScenarios {
         // Then
         then(numbers).containsExactly(1, 3);
     }
+
+    @Test
+    void shouldGetEmptyCollectionFromEmptyOptionalsJava9Style() {
+        // Given
+        List<Optional<Integer>> values = Lists.newArrayList(Optional.empty(), Optional.empty(), Optional.empty());
+
+        // When
+        List<Integer> numbers =
+                values
+                        .stream()
+                        .flatMap(Optional::stream)
+                        .collect(toList());
+
+        // Then
+        then(numbers).isEmpty();
+    }
 }
