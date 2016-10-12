@@ -1,3 +1,5 @@
+package language;
+
 import static org.assertj.core.api.BDDAssertions.then;
 
 import org.junit.jupiter.api.Test;

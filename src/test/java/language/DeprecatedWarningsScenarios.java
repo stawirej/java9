@@ -1,3 +1,5 @@
+package language;
+
 import java.io.LineNumberInputStream;
 
 // Im Java 8 warning despite annotation.

@@ -1,6 +1,8 @@
+package language;
+
 import java.util.stream.IntStream;
 
-public interface SumCheckerJava8 {
+public interface SumCheckerJava9 {
 
     default boolean evenSum(int... numbers) {
         return sum(numbers) % 2 == 0;
@@ -10,9 +12,7 @@ public interface SumCheckerJava8 {
         return sum(numbers) % 2 == 1;
     }
 
-    // we don't want this to be public;
-    // but how else do we resuse?
-    default int sum(int... numbers) {
+    private int sum(int... numbers) {
         return IntStream.of(numbers).sum();
     }
 

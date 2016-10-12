@@ -1,5 +1,8 @@
+package language;
+
 import static org.assertj.core.api.BDDAssertions.then;
 
+import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.Test;
 
 class TryWithResourcesScenarios {
@@ -13,7 +16,7 @@ class TryWithResourcesScenarios {
         closeResourceJava8Style(autoCloseable);
 
         //Then
-        then(autoCloseable.isClosed()).isTrue();
+        BDDAssertions.then(autoCloseable.isClosed()).isTrue();
     }
 
     @Test
@@ -25,7 +28,7 @@ class TryWithResourcesScenarios {
         closeResourceJava8Style(autoCloseable);
 
         //Then
-        then(autoCloseable.isClosed()).isTrue();
+        BDDAssertions.then(autoCloseable.isClosed()).isTrue();
     }
 
     private void closeResourceJava8Style(AutoCloseable autoCloseable) throws Exception {

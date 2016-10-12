@@ -1,3 +1,5 @@
+package language;
+
 class AutoClosableResource implements AutoCloseable {
 
     private boolean isClosed = false;
