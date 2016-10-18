@@ -25,7 +25,7 @@ class TryWithResourcesScenarios {
         AutoClosableResource autoCloseable = new AutoClosableResource();
 
         //When
-        closeResourceJava8Style(autoCloseable);
+        closeResourceJava9Style(autoCloseable);
 
         //Then
         BDDAssertions.then(autoCloseable.isClosed()).isTrue();
