@@ -8,10 +8,13 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 class OSProcessesScenarios {
 
@@ -75,14 +78,29 @@ class OSProcessesScenarios {
             .join();
     }
 
-    @Disabled
     @Test
-    public void shouldListFoldersWithGreppingOnWindows(){
+    public void shouldListFoldersWithGreppingOnWindows() throws IOException, ExecutionException, InterruptedException {
         //Given
-        //dir /s/ b | findstr /r /c:".pdf"
+        ProcessBuilder listFolder = new ProcessBuilder()
+            .command("cmd.exe", "/C dir /s /b & echo")
+            .redirectOutput(ProcessBuilder.Redirect.PIPE)
+            .directory(Paths.get("d:\\!Data\\Books").toFile());
+
+        ProcessBuilder findPdf = new ProcessBuilder()
+            .command("cmd.exe", "/C findstr /r /c:\".pdf\" & echo");
 
         //When
+        List<Process> listAndFind = ProcessBuilder.startPipeline(asList(listFolder, findPdf));
 
-        //Then
+        Process lastProcess = listAndFind.get(listAndFind.size()-1);
+
+        try (InputStream is = lastProcess.getInputStream();
+            Reader isr = new InputStreamReader(is);
+            BufferedReader r = new BufferedReader(isr)) {
+            //long count = r.lines().count();
+            //System.out.println("count = " + count);
+            r.lines().forEach(System.out::println);
+        }
+
     }
 }
