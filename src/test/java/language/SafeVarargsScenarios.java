@@ -26,6 +26,7 @@ class SafeVarargsScenarios {
         then(first.isPresent()).isFalse();
     }
 
+    //Private, non-final methods can now be annotated.
     @SafeVarargs
     private <T> Optional<T> first(T... arguments) {
         return arguments.length == 0 ? Optional.empty() : Optional.of(arguments[0]);
