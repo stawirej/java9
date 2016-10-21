@@ -8,9 +8,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -52,30 +50,25 @@ class OSProcessesScenarios {
 
     @Disabled
     @Test
-    public void shouldListFoldersWithGrepping() throws IOException {
+    public void shouldListFoldersWithGreppingOnLinux() throws IOException {
         //Given
         ProcessBuilder ls = new ProcessBuilder()
             .command("ls")
-            .directory(Paths.get("/home/nipa/tmp").toFile());
+            .directory(Paths.get("/tmp/books").toFile());
 
         ProcessBuilder grepPdf = new ProcessBuilder()
             .command("grep", "pdf")
             .redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
-        List<Process> lsThenGrep = ProcessBuilder
-            .startPipeline(asList(ls, grepPdf));
+        List<Process> lsThenGrep = ProcessBuilder.startPipeline(asList(ls, grepPdf));
 
         //When
-        CompletableFuture[] lsThenGrepFutures = lsThenGrep.stream()
-            // onExit returns a CompletableFuture<Process>
-            .map(Process::onExit)
-            .map(processFuture -> processFuture.thenAccept(process -> System.out.println("PID: " + process.getPid())))
-            .toArray(CompletableFuture[]::new);
+        List<Process> processPipeline = ProcessBuilder.startPipeline(asList(ls, grepPdf));
 
-        // wait until all processes are finished
-        CompletableFuture
-            .allOf(lsThenGrepFutures)
-            .join();
+        //Then
+        final List<String> pdfFiles = getPdfFiles(processPipeline);
+        //pdfFiles.stream().forEach(System.out::println);
+        then(pdfFiles.size()).isGreaterThan(10);
     }
 
     @Test
@@ -90,17 +83,20 @@ class OSProcessesScenarios {
             .command("cmd.exe", "/C findstr /r /c:\".pdf\" & echo");
 
         //When
-        List<Process> listAndFind = ProcessBuilder.startPipeline(asList(listFolder, findPdf));
+        List<Process> processPipeline = ProcessBuilder.startPipeline(asList(listFolder, findPdf));
 
-        Process lastProcess = listAndFind.get(listAndFind.size()-1);
+        //Then
+        final List<String> pdfFiles = getPdfFiles(processPipeline);
+        //pdfFiles.stream().forEach(System.out::println);
+        then(pdfFiles.size()).isGreaterThan(10);
+    }
 
-        try (InputStream is = lastProcess.getInputStream();
-            Reader isr = new InputStreamReader(is);
-            BufferedReader r = new BufferedReader(isr)) {
-            //long count = r.lines().count();
-            //System.out.println("count = " + count);
-            r.lines().forEach(System.out::println);
+    private List<String> getPdfFiles(final List<Process> processPipeline) throws IOException {
+
+        Process lastProcess = processPipeline.get(processPipeline.size() - 1);
+
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(lastProcess.getInputStream()))) {
+            return reader.lines().collect(toList());
         }
-
     }
 }
