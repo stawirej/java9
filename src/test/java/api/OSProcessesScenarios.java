@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 class OSProcessesScenarios {
@@ -21,8 +20,8 @@ class OSProcessesScenarios {
         //Given
         ProcessBuilder dir = new ProcessBuilder();
 
-        //Then
-        final Process listFolderProcess = dir
+        //When
+        dir
             .command("cmd.exe", "/C dir & echo example of & echo folder listing")
             .redirectOutput(ProcessBuilder.Redirect.INHERIT)
             .directory(Paths.get("d:\\").toFile())
@@ -66,7 +65,7 @@ class OSProcessesScenarios {
         List<Process> processPipeline = ProcessBuilder.startPipeline(asList(ls, grepPdf));
 
         //Then
-        final List<String> pdfFiles = getPdfFiles(processPipeline);
+        final List<String> pdfFiles = getFiles(processPipeline);
         //pdfFiles.stream().forEach(System.out::println);
         then(pdfFiles.size()).isGreaterThan(10);
     }
@@ -86,12 +85,12 @@ class OSProcessesScenarios {
         List<Process> processPipeline = ProcessBuilder.startPipeline(asList(listFolder, findPdf));
 
         //Then
-        final List<String> pdfFiles = getPdfFiles(processPipeline);
+        final List<String> pdfFiles = getFiles(processPipeline);
         //pdfFiles.stream().forEach(System.out::println);
         then(pdfFiles.size()).isGreaterThan(10);
     }
 
-    private List<String> getPdfFiles(final List<Process> processPipeline) throws IOException {
+    private List<String> getFiles(final List<Process> processPipeline) throws IOException {
 
         Process lastProcess = processPipeline.get(processPipeline.size() - 1);
 
