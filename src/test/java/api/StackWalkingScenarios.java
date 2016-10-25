@@ -40,10 +40,11 @@ class StackWalkingScenarios {
 
     private static String walk(Stream<StackWalker.StackFrame> stackFrameStream) {
         String PACKAGE_NAME = "api";
+        String NEW_LINE = System.getProperty("line.separator");
 
         return stackFrameStream
             .filter(frame -> frame.getClassName().contains(PACKAGE_NAME))
             .map(frame -> "Line: " + frame.getLineNumber() + " Method name: " + frame.getMethodName())
-            .collect(joining(System.getProperty("line.separator")));
+            .collect(joining(NEW_LINE));
     }
 }
