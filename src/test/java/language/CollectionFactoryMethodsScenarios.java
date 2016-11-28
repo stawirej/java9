@@ -11,7 +11,7 @@ import java.util.Map;
 class CollectionFactoryMethodsScenarios {
 
     @Test
-    public void shouldInitialiseList() {
+    public void shouldInitializeList() {
         //When
         List<String> letters = List.of("a", "b", "c");
 
@@ -20,7 +20,7 @@ class CollectionFactoryMethodsScenarios {
     }
 
     @Test
-    public void shouldInitialisationBeImmutable(){
+    public void shouldInitializationBeImmutable(){
         //Given
         List<String> letters = List.of("a", "b", "c");
 
@@ -35,7 +35,7 @@ class CollectionFactoryMethodsScenarios {
     }
 
     @Test
-    public void shouldInitialiseMap(){
+    public void shouldInitializeMap(){
         //When
         Map<String, Integer> nameToValue = Map.of(
             "one", 1,
@@ -50,7 +50,7 @@ class CollectionFactoryMethodsScenarios {
     }
 
     @Test
-    public void shouldInitialiseMapByEntries(){
+    public void shouldInitializeMapByEntries(){
         //When
         Map<String, Integer> nameToValue = Map.ofEntries(
             entry("one", 1),
