@@ -4,11 +4,21 @@ import static java.util.Map.entry;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.expectThrows;
 
+import com.google.common.collect.Maps;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
 class CollectionFactoryMethodsScenarios {
+
+    //Java 8 initialization style.
+    private static final Map<Integer, String> directions = Maps.newHashMap();
+    static {
+        directions.put(1, "UP");
+        directions.put(2, "DOWN");
+        directions.put(3, "LEFT");
+        directions.put(4, "RIGHT");
+    }
 
     @Test
     public void shouldInitializeList() {
@@ -17,6 +27,15 @@ class CollectionFactoryMethodsScenarios {
 
         //Then
         then(letters).containsExactly("a", "b", "c");
+    }
+
+    @Test
+    void shouldInitializationBeMutableForJava8(){
+        //When
+        directions.put(5, "DUMMY");
+
+        //Then
+        then(directions).containsValues("UP", "DOWN", "LEFT", "RIGHT", "DUMMY");
     }
 
     @Test
