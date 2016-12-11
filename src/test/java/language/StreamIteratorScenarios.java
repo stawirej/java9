@@ -1,14 +1,15 @@
 package language;
 
-import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.Test;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.setAllowComparingPrivateFields;
+import static org.assertj.core.api.BDDAssertions.then;
 
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.BDDAssertions.then;
+import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.Test;
 
 final class StreamIteratorScenarios {
 
@@ -48,5 +49,27 @@ final class StreamIteratorScenarios {
 
         // Then
         then(letters).containsExactly("A", "B", "C");
+    }
+
+    @Test
+    void shouldLoseLastElementWhenPopStackByIterate(){
+        //Given
+        LogStack logStack = new LogStack();
+        logStack.push(1);
+        logStack.push(2);
+        logStack.push(3);
+        logStack.push(4);
+
+        //When
+        List<Integer> popped =
+                Stream.iterate(logStack.popSeed(),              // popSeed() just to distinguish in logging.
+                                                                // Predicate is not checked for seed pop.
+                                                                // For empty stack there will be exception.
+                                element -> !logStack.isEmpty(), // Predicate is consulted before pushing to stream.
+                                element -> logStack.pop())      // This goes before !logStack.isEmpty() predicate.
+                    .collect(toList());
+
+        //Then
+        then(popped).containsExactlyElementsOf(List.of(4, 3, 2));
     }
 }
