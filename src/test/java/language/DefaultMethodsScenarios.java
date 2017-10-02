@@ -6,36 +6,39 @@ import org.junit.jupiter.api.Test;
 
 class DefaultMethodsScenarios {
 
-    @Test public void shouldCalculateEvenSum() {
-        //Given
+    @Test
+    void shouldCalculateEvenSum() {
+        // Given
         SumChecker sumChecker = new SumChecker();
 
-        //When
+        // When
         final boolean isEvenSum = sumChecker.evenSum(1, 2, 3, 4);
 
-        //Then
+        // Then
         then(isEvenSum).isTrue();
     }
 
-    @Test public void shouldCalculateOddSum() {
-        //Given
+    @Test
+    void shouldCalculateOddSum() {
+        // Given
         SumChecker sumChecker = new SumChecker();
 
-        //When
+        // When
         final boolean isOddSum = sumChecker.oddSum(1, 2, 3, 4, 5);
 
-        //Then
+        // Then
         then(isOddSum).isTrue();
     }
 
-    @Test public void shouldHaveAccessToAdditionalMethodInLegacySumChecker() {
-        //Given
+    @Test
+    void shouldHaveAccessToAdditionalMethodInLegacySumChecker() {
+        // Given
         LegacySumChecker legacySumChecker = new LegacySumChecker();
 
-        //When
+        // When
         final int sum = legacySumChecker.sum(1, 2, 3);
 
-        //Then
+        // Then
         then(sum).isEqualTo(6);
     }
 }

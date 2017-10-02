@@ -1,37 +1,38 @@
 package language;
 
-import static org.assertj.core.api.BDDAssertions.then;
-
 import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.Test;
 
 class TryWithResourcesScenarios {
 
     @Test
-    public void shouldTryWithResourcesJava8() throws Exception {
-        //Given
+    void shouldTryWithResourcesJava8() throws Exception {
+        // Given
         AutoClosableResource autoCloseable = new AutoClosableResource();
 
-        //When
+        // When
         closeResourceJava8Style(autoCloseable);
 
-        //Then
-        BDDAssertions.then(autoCloseable.isClosed()).isTrue();
+        // Then
+        BDDAssertions.then(autoCloseable.isClosed())
+            .isTrue();
     }
 
     @Test
-    public void shouldTryWithResourcesJava9() throws Exception {
-        //Given
+    void shouldTryWithResourcesJava9() throws Exception {
+        // Given
         AutoClosableResource autoCloseable = new AutoClosableResource();
 
-        //When
+        // When
         closeResourceJava9Style(autoCloseable);
 
-        //Then
-        BDDAssertions.then(autoCloseable.isClosed()).isTrue();
+        // Then
+        BDDAssertions.then(autoCloseable.isClosed())
+            .isTrue();
     }
 
-    private void closeResourceJava8Style(AutoCloseable autoCloseable) throws Exception {
+    private void closeResourceJava8Style(
+        AutoCloseable autoCloseable) throws Exception {
         try (AutoCloseable closeable = autoCloseable) {
             // Intentionally empty.
         }

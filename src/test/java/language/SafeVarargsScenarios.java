@@ -8,7 +8,7 @@ import java.util.Optional;
 class SafeVarargsScenarios {
 
     @Test
-    public void shouldGetFirstElement() {
+    void shouldGetFirstElement() {
         //When
         final Optional<Integer> first = first(1, 2, 3);
 
@@ -18,7 +18,7 @@ class SafeVarargsScenarios {
     }
 
     @Test
-    public void shouldGetEmptyOptional() {
+    void shouldGetEmptyOptional() {
         //When
         final Optional<Integer> first = first();
 

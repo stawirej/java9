@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 class OSProcessesScenarios {
 
     @Test
-    public void shouldListFolderOnStandardOutput() throws IOException {
+    void shouldListFolderOnStandardOutput() throws IOException {
         //Given
         ProcessBuilder dir = new ProcessBuilder();
 
@@ -30,7 +30,7 @@ class OSProcessesScenarios {
 
 
     @Test
-    public void shouldListFolderAndReadOutput() throws IOException {
+    void shouldListFolderAndReadOutput() throws IOException {
         //Given
         ProcessBuilder dir = new ProcessBuilder();
 
@@ -49,7 +49,7 @@ class OSProcessesScenarios {
 
     @Disabled
     @Test
-    public void shouldListFoldersWithGreppingOnLinux() throws IOException {
+    void shouldListFoldersWithGreppingOnLinux() throws IOException {
         //Given
         ProcessBuilder ls = new ProcessBuilder()
             .command("ls")
@@ -71,7 +71,7 @@ class OSProcessesScenarios {
     }
 
     @Test
-    public void shouldListFoldersWithGreppingOnWindows() throws IOException, ExecutionException, InterruptedException {
+    void shouldListFoldersWithGreppingOnWindows() throws IOException, ExecutionException, InterruptedException {
         //Given
         ProcessBuilder listFolder = new ProcessBuilder()
             .command("cmd.exe", "/C dir /s /b & echo")
